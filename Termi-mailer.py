@@ -1,7 +1,7 @@
 
 ##################################################################################
                                                                                  #
-# termi-mailer                                                                   #
+# Termi-mailer                                                                   #
 # Python script to view mails and download attatchments from terminal            #
 # Copyright- Saket Harsh IIT Kanpur                                              #
 # E-Mail- sharsh2010@gmail.com                                                   #
@@ -9,9 +9,7 @@
 
 
 
-
-
-import email, getpass, imaplib, os, re 
+import email, getpass, imaplib, os
 prompt= ">"
 print "Enter WebMail username"
 user = raw_input(prompt)
@@ -34,9 +32,8 @@ for emailid in range(1,11):
 	email_body = data[0][1] # getting the mail content
 	mail=email.message_from_string(email_body)
 	sender = mail['from'].split()[-1]
-	address = re.sub(r'[<>]','',sender)
+	print sender
 	print emailid , mail['Subject']
-	print address
 	print "\n"
 
 
@@ -74,14 +71,16 @@ for part in mail.walk():
         if part.get('Content-Disposition') is None:
             continue
         filename = part.get_filename()
-        if filename != "untitled-[2].html": # Default name of an untitled file that is never needed to be Downloaded 
-        	print filename , "            To Download Press y or Y"
+        if filename != "untitled-[2].html":   # Default name of an untitled file that is never needed to be Downloaded 
+        	print filename 
+        	print "To Download press Y or y"
         	attach= raw_input(prompt)
         	if attach is "y" or "Y":
         		data = part.get_payload(decode=True)
         		if not data:
         			print 'No attachments...'
         			continue
+        	
         	f  = open( os.path.join( os.getcwd(),filename), 'w')
         	f.write(data)
         	f.close()
@@ -90,6 +89,7 @@ for part in mail.walk():
 
 m.close()
 m.logout()
+
 
 
 
