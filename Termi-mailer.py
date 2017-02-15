@@ -9,8 +9,22 @@
 
 
 
-import email, getpass, imaplib, os
+import email, getpass, imaplib, os, urllib2
 prompt= ">"
+
+
+def internet_on():
+    try:
+        response=urllib2.urlopen('https://www.google.co.in/',timeout=20)
+        return True
+    except urllib2.URLError as err: pass
+    return False
+
+if not internet_on():
+	print "Internet not working ! Exiting"
+	quit()
+
+
 print "Enter WebMail username"
 user = raw_input(prompt)
 print "Enter Password"
@@ -23,6 +37,7 @@ m.select("INBOX")      # You can choose other mailboxes too  . To know all exist
 # print m.list
 resp, items = m.search(None, "ALL") # you could filter using the IMAP rules here (check http://www.example-code.com/csharp/imap-search-critera.asp)
 items=items[0].split()
+
 
 
 
@@ -89,6 +104,7 @@ for part in mail.walk():
 
 m.close()
 m.logout()
+
 
 
 
