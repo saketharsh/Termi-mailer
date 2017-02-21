@@ -10,17 +10,17 @@
 
 
 import email, getpass, imaplib, os, urllib2
-prompt= ">"
+prompt= ">>"
 
 
-def internet_on():
+def connectivity():
     try:
         response=urllib2.urlopen('https://www.google.co.in/',timeout=20)
         return True
     except urllib2.URLError as err: pass
     return False
 
-if not internet_on():
+if not connectivity():
 	print "Internet not working ! Exiting"
 	quit()
 
@@ -31,9 +31,9 @@ print "Enter Password"
 pwd = getpass.getpass( prompt)
 
 # Connecting to WebMail IMAP Server
-m = imaplib.IMAP4_SSL("newmailhost.cc.iitk.ac.in")
+m = imaplib.IMAP4_SSL("newmailhost.cc.iitk.ac.in") #Works from IITK!! If outside, change it to "qasid.iitk.ac.in" 
 m.login(user,pwd)
-m.select("INBOX")      # You can choose other mailboxes too  . To know all existing mailboxes uncomment the line below
+m.select("INBOX")   # You can choose other mailboxes too  . To know all existing mailboxes uncomment the line below
 # print m.list
 resp, items = m.search(None, "ALL") # you could filter using the IMAP rules here (check http://www.example-code.com/csharp/imap-search-critera.asp)
 items=items[0].split()
@@ -49,7 +49,6 @@ for emailid in range(1,11):
 	sender = mail['from'].split()[-1]
 	print sender
 	print emailid , mail['Subject']
-	print "\n"
 
 
 # Taking User Input to show the Mail 
@@ -95,10 +94,9 @@ for part in mail.walk():
         		if not data:
         			print 'No attachments...'
         			continue
-        	
-        	f  = open( os.path.join( os.getcwd(),filename), 'w')
-        	f.write(data)
-        	f.close()
+        			f  = open( os.path.join( os.getcwd(),filename), 'w')
+        			f.write(data)
+        			f.close()
 
 
 
