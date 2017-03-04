@@ -10,28 +10,30 @@
 
 
 import email, getpass, imaplib, os, urllib2
+from termcolor import colored
 prompt= ">>"
 
 
 def connectivity():
-    try:
-        response=urllib2.urlopen('https://www.google.co.in/',timeout=20)
-        return True
-    except urllib2.URLError as err: pass
-    return False
+	if urllib2.urlopen('https://webmail2.iitk.ac.in/webmail/src/login.php',timeout=20):
+		return 1
+	if urllib2.urlopen('https://www.google.co.in/',timeout=20):
+		return 2
+	return False
+    
 
 if not connectivity():
 	print "Internet not working ! Exiting"
 	quit()
 
-
-print "Enter WebMail username"
+server=["newmailhost.cc.iitk.ac.in","qasid.iitk.ac.in"]
+print colored("Enter WebMail username","blue")
 user = raw_input(prompt)
-print "Enter Password"
+print colored("Enter Password", "blue")
 pwd = getpass.getpass( prompt)
 
 # Connecting to WebMail IMAP Server
-m = imaplib.IMAP4_SSL("newmailhost.cc.iitk.ac.in") #Works from IITK!! If outside, change it to "qasid.iitk.ac.in" 
+m = imaplib.IMAP4_SSL(server[connectivity()-1]) 
 m.login(user,pwd)
 m.select("INBOX")   # You can choose other mailboxes too  . To know all existing mailboxes uncomment the line below
 # print m.list
@@ -43,12 +45,14 @@ items=items[0].split()
 
 #Printing Top 10 Mails from Inbox
 for emailid in range(1,11):	
+	color=["blue","white"]
 	resp, data = m.fetch(items[len(items)-emailid], "(RFC822)") # fetching the mail, "`(RFC822)`" means "get the whole stuff", but you can ask for headers only, 
 	email_body = data[0][1] # getting the mail content
 	mail=email.message_from_string(email_body)
 	sender = mail['from'].split()[-1]
-	print sender
-	print emailid , mail['Subject']
+	print emailid , colored(mail['Subject'], color[emailid%2])
+	print colored(sender, color[emailid%2])
+	
 
 
 # Taking User Input to show the Mail 
