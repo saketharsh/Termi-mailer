@@ -1,6 +1,5 @@
 
 ##################################################################################
-                                                                                 #
 # Termi-mailer                                                                   #
 # Python script to view mails and download attatchments from terminal            #
 # Copyright- Saket Harsh IIT Kanpur                                              #
@@ -15,15 +14,19 @@ prompt= ">>"
 
 
 def connectivity():
-	if urllib2.urlopen('https://webmail2.iitk.ac.in/webmail/src/login.php',timeout=20):
+	try:
+		response=urllib2.urlopen('https://webmail2.iitk.ac.in/webmail/src/login.php',timeout=20)
 		return 1
-	if urllib2.urlopen('https://www.google.co.in/',timeout=20):
-		return 2
-	return False
+	except urllib2.URLError:
+		try:
+			response=urllib2.urlopen('https://www.google.co.in/',timeout=20)
+			return 2
+		except urllib2.URLError:
+			return False
     
 
 if not connectivity():
-	print "Internet not working ! Exiting"
+	print "Check Internet Connection ! Exiting"
 	quit()
 
 server=["newmailhost.cc.iitk.ac.in","qasid.iitk.ac.in"]
@@ -56,7 +59,7 @@ for emailid in range(1,11):
 
 
 # Taking User Input to show the Mail 
-print "Enter Mail Number"	
+print colored("\nEnter Mail Number","cyan")	
 mail_num=int(raw_input(prompt))
 os.system("clear")   # Clear the screen to show fresh mail		
 resp, data = m.fetch(items[len(items)-mail_num], "(RFC822)") 
@@ -64,7 +67,7 @@ email_body = data[0][1]
 mail=email.message_from_string(email_body)
 
 
-# Two cases arise Either mail is multipart or text. Dealing both differently
+# Two cases arise Either mail is multipart(probably Containing attatchments) or text. Dealing both differently
 if mail.is_multipart():
 	bodytext=mail.get_payload()[0].get_payload();
 	if type(bodytext) is list:
