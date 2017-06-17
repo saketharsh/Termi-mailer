@@ -1,9 +1,18 @@
-# Termi-mailer
-A terminal based python script to read mails  and Download Attachments as and when required. Currently only for IITK Webmail users. Don't judge it by  the name. It does not send termination mails.
+
 ```
- Termi-Mailer 
-``` 
+.___________. _______ .______      .___  ___.  __         .___  ___.      ___       __   __       _______ .______      
+|           ||   ____||   _  \     |   \/   | |  |        |   \/   |     /   \     |  | |  |     |   ____||   _  \     
+`---|  |----`|  |__   |  |_)  |    |  \  /  | |  |  ______|  \  /  |    /  ^  \    |  | |  |     |  |__   |  |_)  |    
+   |  |     |   __|  |      /     |  |\/|  | |  | |______|  |\/|  |   /  /_\  \   |  | |  |     |   __|  |      /     
+   |  |     |  |____ |  |\  \----.|  |  |  | |  |        |  |  |  |  /  _____  \  |  | |  `----.|  |____ |  |\  \----.
+   |__|     |_______|| _| `._____||__|  |__| |__|        |__|  |__| /__/     \__\ |__| |_______||_______|| _| `._____|
+
+```
+
+A terminal based python script to read mails and download Attachments as and when required. Currently only for IITK Webmail users. Don't judge it by the name. It does not send termination mails to college-students.
+
 ##Installation
+
 Clone the above repository in your home folder
 ```
 cd ~
@@ -23,6 +32,3 @@ Packages of Python:
 ## TODO
 
 To add GUI while showing the mails and downloading the file in Desired Folder
-
-
-
