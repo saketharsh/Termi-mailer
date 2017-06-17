@@ -20,6 +20,8 @@ git clone https://github.com/saketharsh/Termi-mailer.git
 
 ```
 Install other dependencies such as differnt packages of Python, and Python itself
+## Usage
+
 
 ## Dependencies
 Python 2.7
